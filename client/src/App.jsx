@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SearchBar from "./components/SearchBar";
 import CurrentWeather from "./components/CurrentWeather";
 import WeatherDetails from "./components/WeatherDetails";
+import HourlyForecast from "./components/HourlyForecast";
 import Forecast from "./components/Forecast";
 
 import { getWeather } from "./services/weatherService";
@@ -71,15 +72,17 @@ function App() {
         )}
 
         {/* Weather */}
-        {weather && !loading && (
-          <div className="mt-8 flex w-full flex-col items-center gap-6">
-            <CurrentWeather weather={weather} />
+        {weather && (
+  <div className="mt-8 flex w-full flex-col items-center">
+    <CurrentWeather weather={weather} />
 
-            <WeatherDetails weather={weather} />
+    <WeatherDetails weather={weather} />
 
-            <Forecast weather={weather} />
-          </div>
-        )}
+    <HourlyForecast weather={weather} />
+
+    <Forecast weather={weather} />
+  </div>
+)}
       </main>
     </div>
   );
