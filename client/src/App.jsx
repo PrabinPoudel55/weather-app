@@ -12,22 +12,24 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [lastCity, setLastCity] = useState("Kathmandu");
 
   const searchWeather = async (city) => {
-    try {
-      setLoading(true);
-      setError("");
+  try {
+    setLoading(true);
+    setError("");
 
-      const data = await getWeather(city);
+    const data = await getWeather(city);
 
-      setWeather(data);
-    } catch (error) {
-      setWeather(null);
-      setError(error.message || "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setWeather(data);
+    setLastCity(city);
+  } catch (error) {
+    setWeather(null);
+    setError(error.message || "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     searchWeather("Kathmandu");
@@ -102,9 +104,17 @@ function App() {
 
             <WeatherDetails weather={weather} />
 
-            <HourlyForecast weather={weather} />
+<button
+  onClick={() => searchWeather(lastCity)}
+  disabled={loading}
+  className="mt-6 rounded-2xl bg-sky-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-60"
+>
+  {loading ? "Refreshing..." : "🔄 Refresh Weather"}
+</button>
 
-            <Forecast weather={weather} />
+<HourlyForecast weather={weather} />
+
+<Forecast weather={weather} />
           </div>
         )}
       </main>
