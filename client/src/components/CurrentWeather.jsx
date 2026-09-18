@@ -23,28 +23,33 @@ function CurrentWeather({ weather }) {
           
           {/* Location */}
           <div className="text-center md:text-left">
-            <p className="text-sm font-semibold uppercase tracking-widest text-sky-600">
-              Current Weather
-            </p>
+  <p className="text-sm font-semibold uppercase tracking-widest text-sky-600">
+    Current Weather
+  </p>
 
-            <div className="mt-3 flex items-center justify-center gap-2 md:justify-start">
-              <span className="text-xl">📍</span>
+  <div className="mt-3 flex items-center justify-center gap-2 md:justify-start">
+    <span className="text-xl">📍</span>
 
-              <h2 className="text-3xl font-bold text-slate-800 sm:text-4xl">
-                {location.name}
-              </h2>
-            </div>
+    <h2 className="text-3xl font-bold text-slate-800 sm:text-4xl">
+      {location.name}
+    </h2>
+  </div>
 
-            <p className="mt-1 text-slate-500">
-              {location.country}
-            </p>
+  <p className="mt-1 text-slate-500">
+    {location.country}
+  </p>
 
-            <p className="mt-4 text-sm text-slate-400">
-              Coordinates:{" "}
-              {location.latitude.toFixed(2)},{" "}
-              {location.longitude.toFixed(2)}
-            </p>
-          </div>
+  <div className="mt-4 space-y-1 text-sm text-slate-400">
+    <p>
+      📍 {location.latitude.toFixed(2)},{" "}
+      {location.longitude.toFixed(2)}
+    </p>
+
+    <p>
+      🕐 {location.timezone}
+    </p>
+  </div>
+</div>
 
           {/* Weather */}
           <div className="text-center">
@@ -80,26 +85,7 @@ function CurrentWeather({ weather }) {
         </div>
       </div>
 
-      {/* Weather Details */}
-      <div className="grid grid-cols-1 border-t border-slate-100 sm:grid-cols-3">
-        <WeatherDetail
-          icon="💧"
-          label="Humidity"
-          value={`${current.relative_humidity_2m}${currentUnits.relative_humidity_2m}`}
-        />
-
-        <WeatherDetail
-          icon="💨"
-          label="Wind Speed"
-          value={`${current.wind_speed_10m} ${currentUnits.wind_speed_10m}`}
-        />
-
-        <WeatherDetail
-          icon="🌧️"
-          label="Precipitation"
-          value={`${current.precipitation} ${currentUnits.precipitation}`}
-        />
-      </div>
+      
     </section>
   );
 }
