@@ -5,15 +5,31 @@ import CurrentWeather from "./components/CurrentWeather";
 import WeatherDetails from "./components/WeatherDetails";
 import HourlyForecast from "./components/HourlyForecast";
 import Forecast from "./components/Forecast";
+import SearchHistory from "./components/SearchHistory";
 
 import { getWeather } from "./services/weatherService";
+import {
+  getSearchHistory,
+  deleteSearchHistory,
+  clearSearchHistory,
+} from "./services/historyService";
 
 function App() {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [lastCity, setLastCity] = useState("Kathmandu");
+  const [history, setHistory] = useState([]);
 
+  const loadHistory = async () => {
+  try {
+    const data = await getSearchHistory();
+
+    setHistory(data.history);
+  } catch (error) {
+    console.error("History Error:", error.message);
+  }
+};
   const searchWeather = async (city) => {
   try {
     setLoading(true);
@@ -23,6 +39,7 @@ function App() {
 
     setWeather(data);
     setLastCity(city);
+    await loadHistory();
   } catch (error) {
     setWeather(null);
     setError(error.message || "Something went wrong");
@@ -30,10 +47,30 @@ function App() {
     setLoading(false);
   }
 };
+const handleDeleteHistory = async (id) => {
+  try {
+    await deleteSearchHistory(id);
+
+    await loadHistory();
+  } catch (error) {
+    console.error("Delete History Error:", error.message);
+  }
+};
+
+const handleClearHistory = async () => {
+  try {
+    await clearSearchHistory();
+
+    setHistory([]);
+  } catch (error) {
+    console.error("Clear History Error:", error.message);
+  }
+};
 
   useEffect(() => {
-    searchWeather("Kathmandu");
-  }, []);
+  searchWeather("Kathmandu");
+  loadHistory();
+}, []);
 
   return (
     <div
@@ -115,8 +152,17 @@ function App() {
 <HourlyForecast weather={weather} />
 
 <Forecast weather={weather} />
+<SearchHistory
+  history={history}
+  onSelect={searchWeather}
+  onDelete={handleDeleteHistory}
+  onClear={handleClearHistory}
+/>
           </div>
         )}
+
+
+        
       </main>
     </div>
   );
