@@ -1,3 +1,4 @@
+const SearchHistory = require("../models/SearchHistory");
 const getWeather = async (req, res) => {
   try {
     const { city } = req.query;
@@ -38,6 +39,14 @@ const getWeather = async (req, res) => {
 
     const latitude = location.latitude;
     const longitude = location.longitude;
+    await SearchHistory.create({
+  city: location.name,
+  country: location.country,
+  countryCode: location.country_code,
+  latitude,
+  longitude,
+  timezone: location.timezone,
+});
 
     // -----------------------------------
     // STEP 2: Get weather data
