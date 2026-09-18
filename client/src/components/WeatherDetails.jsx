@@ -1,7 +1,6 @@
 function WeatherDetails({ weather }) {
-  const { current, currentUnits, hourly, hourlyUnits } = weather;
+  const { current, currentUnits, hourly, hourlyUnits, daily } = weather;
 
-  // Find the current hour in the hourly forecast
   const currentIndex = hourly.time.findIndex(
     (time) => time === current.time
   );
@@ -44,6 +43,20 @@ function WeatherDetails({ weather }) {
           value={`${Math.round(current.apparent_temperature)}${currentUnits.apparent_temperature}`}
         />
       </div>
+
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <SunCard
+          icon="🌅"
+          label="Sunrise"
+          time={formatTime(daily.sunrise[0])}
+        />
+
+        <SunCard
+          icon="🌇"
+          label="Sunset"
+          time={formatTime(daily.sunset[0])}
+        />
+      </div>
     </section>
   );
 }
@@ -51,21 +64,38 @@ function WeatherDetails({ weather }) {
 function WeatherDetail({ icon, label, value }) {
   return (
     <div className="flex items-center gap-4 border-b border-slate-100 p-5 last:border-b-0 sm:flex-col sm:justify-center sm:border-r sm:border-b-0 sm:last:border-r-0">
-      <div className="text-3xl">
-        {icon}
-      </div>
+      <div className="text-3xl">{icon}</div>
 
       <div className="text-center">
-        <p className="text-sm font-medium text-slate-500">
-          {label}
-        </p>
-
-        <p className="mt-1 text-lg font-bold text-slate-800">
-          {value}
-        </p>
+        <p className="text-sm font-medium text-slate-500">{label}</p>
+        <p className="mt-1 text-lg font-bold text-slate-800">{value}</p>
       </div>
     </div>
   );
+}
+
+function SunCard({ icon, label, time }) {
+  return (
+    <div className="flex items-center justify-center gap-4 rounded-3xl bg-white p-5 shadow-lg">
+      <div className="text-4xl">{icon}</div>
+
+      <div>
+        <p className="text-sm font-medium text-slate-500">{label}</p>
+        <p className="mt-1 text-xl font-bold text-slate-800">{time}</p>
+      </div>
+    </div>
+  );
+}
+
+function formatTime(dateTime) {
+  if (!dateTime) return "--";
+
+  const date = new Date(dateTime);
+
+  return date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
 
 export default WeatherDetails;
