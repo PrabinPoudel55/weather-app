@@ -5,6 +5,7 @@ import {
 
 function CurrentWeather({ weather }) {
   const { location, current, currentUnits } = weather;
+  const isDay = current.is_day === 1;
 
   const description = getWeatherDescription(
     current.weather_code
@@ -16,30 +17,46 @@ function CurrentWeather({ weather }) {
   );
 
   return (
-    <section className="w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-xl">
+    <section
+  className={`w-full max-w-5xl overflow-hidden rounded-3xl shadow-xl transition-colors duration-700 ${
+    isDay ? "bg-white" : "bg-slate-800"
+  }`}
+>
       {/* Main Weather Information */}
       <div className="p-6 sm:p-10">
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           
           {/* Location */}
           <div className="text-center md:text-left">
-  <p className="text-sm font-semibold uppercase tracking-widest text-sky-600">
-    Current Weather
-  </p>
+  <p
+  className={`text-sm font-semibold uppercase tracking-widest ${
+    isDay ? "text-sky-600" : "text-sky-300"
+  }`}
+>
+  {isDay ? "Daytime Weather" : "Nighttime Weather"}
+</p>
 
   <div className="mt-3 flex items-center justify-center gap-2 md:justify-start">
     <span className="text-xl">📍</span>
 
-    <h2 className="text-3xl font-bold text-slate-800 sm:text-4xl">
+    <h2
+  className={`text-3xl font-bold sm:text-4xl ${
+    isDay ? "text-slate-800" : "text-white"
+  }`}
+>
       {location.name}
     </h2>
   </div>
 
-  <p className="mt-1 text-slate-500">
+ <p className={`mt-1 ${isDay ? "text-slate-500" : "text-slate-300"}`}>
     {location.country}
   </p>
 
-  <div className="mt-4 space-y-1 text-sm text-slate-400">
+ <div
+  className={`mt-4 space-y-1 text-sm ${
+    isDay ? "text-slate-400" : "text-slate-400"
+  }`}
+>
     <p>
       📍 {location.latitude.toFixed(2)},{" "}
       {location.longitude.toFixed(2)}
@@ -57,7 +74,11 @@ function CurrentWeather({ weather }) {
               {icon}
             </div>
 
-            <p className="mt-3 text-lg font-semibold text-slate-700">
+            <p
+  className={`mt-3 text-lg font-semibold ${
+    isDay ? "text-slate-700" : "text-slate-200"
+  }`}
+>
               {description}
             </p>
           </div>
@@ -65,18 +86,30 @@ function CurrentWeather({ weather }) {
           {/* Temperature */}
           <div className="text-center md:text-right">
             <div className="flex items-start justify-center md:justify-end">
-              <span className="text-6xl font-bold text-slate-800 sm:text-7xl">
+              <span
+  className={`text-6xl font-bold sm:text-7xl ${
+    isDay ? "text-slate-800" : "text-white"
+  }`}
+>
                 {Math.round(current.temperature_2m)}
               </span>
 
-              <span className="mt-2 ml-2 text-2xl text-slate-500">
+              <span
+  className={`mt-2 ml-2 text-2xl ${
+    isDay ? "text-slate-500" : "text-slate-300"
+  }`}
+>
                 {currentUnits.temperature_2m}
               </span>
             </div>
 
-            <p className="mt-2 text-slate-500">
+            <p className={`mt-2 ${isDay ? "text-slate-500" : "text-slate-300"}`}>
               Feels like{" "}
-              <span className="font-semibold text-slate-700">
+              <span
+  className={`font-semibold ${
+    isDay ? "text-slate-700" : "text-white"
+  }`}
+>
                 {Math.round(current.apparent_temperature)}
                 {currentUnits.apparent_temperature}
               </span>
@@ -90,24 +123,6 @@ function CurrentWeather({ weather }) {
   );
 }
 
-function WeatherDetail({ icon, label, value }) {
-  return (
-    <div className="flex items-center justify-center gap-4 border-b border-slate-100 p-5 last:border-b-0 sm:flex-col sm:border-b-0 sm:border-r sm:last:border-r-0">
-      <div className="text-3xl">
-        {icon}
-      </div>
 
-      <div className="text-center">
-        <p className="text-sm font-medium text-slate-500">
-          {label}
-        </p>
-
-        <p className="mt-1 text-lg font-bold text-slate-800">
-          {value}
-        </p>
-      </div>
-    </div>
-  );
-}
 
 export default CurrentWeather;

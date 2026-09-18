@@ -34,21 +34,45 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-white to-blue-100 px-4 py-8 sm:px-6">
+    <div
+  className={`min-h-screen px-4 py-8 transition-colors duration-700 sm:px-6 ${
+    weather?.current?.is_day
+      ? "bg-gradient-to-br from-sky-100 via-white to-blue-100"
+      : "bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950"
+  }`}
+>
       <main className="mx-auto flex max-w-6xl flex-col items-center">
         {/* Header */}
         <header className="mb-8 text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-sky-600">
-            Weather Dashboard
-          </p>
+         <p
+  className={`text-sm font-semibold uppercase tracking-widest ${
+    weather?.current?.is_day
+      ? "text-sky-600"
+      : "text-sky-300"
+  }`}
+>
+  {weather?.current?.is_day ? "Daytime Weather" : "Nighttime Weather"}
+</p>
 
-          <h1 className="mt-2 text-4xl font-bold text-slate-800 sm:text-5xl">
-            Weather App
-          </h1>
+         <h1
+  className={`mt-2 text-4xl font-bold sm:text-5xl ${
+    weather?.current?.is_day
+      ? "text-slate-800"
+      : "text-white"
+  }`}
+>
+  Weather App
+</h1>
 
-          <p className="mt-3 text-slate-500">
-            Search any city and check its current weather
-          </p>
+         <p
+  className={`mt-3 ${
+    weather?.current?.is_day
+      ? "text-slate-500"
+      : "text-slate-300"
+  }`}
+>
+  Search any city and check its current weather
+</p>
         </header>
 
         {/* Search */}
