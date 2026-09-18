@@ -71,18 +71,18 @@ function App() {
           </div>
         )}
 
-        {/* Weather */}
+               {/* Weather */}
         {weather && (
-  <div className="mt-8 flex w-full flex-col items-center">
-    <CurrentWeather weather={weather} />
+          <div className="mt-8 flex w-full flex-col items-center">
+            <CurrentWeather weather={weather} />
 
-    <WeatherDetails weather={weather} />
+            <WeatherDetails weather={weather} />
 
-    <HourlyForecast weather={weather} />
+            <HourlyForecast weather={weather} />
 
-    <Forecast weather={weather} />
-  </div>
-)}
+            <Forecast weather={weather} />
+          </div>
+        )}
       </main>
     </div>
   );
