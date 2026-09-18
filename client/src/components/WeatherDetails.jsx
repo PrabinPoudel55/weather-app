@@ -1,9 +1,19 @@
 function WeatherDetails({ weather }) {
-  const { current, currentUnits } = weather;
+  const { current, currentUnits, hourly, hourlyUnits } = weather;
+
+  // Find the current hour in the hourly forecast
+  const currentIndex = hourly.time.findIndex(
+    (time) => time === current.time
+  );
+
+  const rainProbability =
+    currentIndex >= 0
+      ? hourly.precipitation_probability[currentIndex]
+      : hourly.precipitation_probability[0];
 
   return (
     <section className="mt-6 w-full max-w-5xl">
-      <div className="grid grid-cols-1 overflow-hidden rounded-3xl bg-white shadow-lg sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 overflow-hidden rounded-3xl bg-white shadow-lg sm:grid-cols-2 lg:grid-cols-5">
         <WeatherDetail
           icon="💧"
           label="Humidity"
@@ -20,6 +30,12 @@ function WeatherDetails({ weather }) {
           icon="🌧️"
           label="Precipitation"
           value={`${current.precipitation} ${currentUnits.precipitation}`}
+        />
+
+        <WeatherDetail
+          icon="☔"
+          label="Rain Probability"
+          value={`${rainProbability}${hourlyUnits.precipitation_probability}`}
         />
 
         <WeatherDetail
