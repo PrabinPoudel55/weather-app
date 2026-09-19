@@ -57,8 +57,18 @@ const getWeather = async (req, res) => {
     );
 
     if (!weatherResponse.ok) {
-      throw new Error("Failed to connect to weather service");
-    }
+  const errorText = await weatherResponse.text();
+
+  console.error(
+    "Open-Meteo Error:",
+    weatherResponse.status,
+    errorText
+  );
+
+  throw new Error(
+    `Open-Meteo returned ${weatherResponse.status}: ${errorText}`
+  );
+}
 
     const weatherData = await weatherResponse.json();
 
