@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000/api/history";
+const API_URL =
+  "https://weather-app-ivge.onrender.com/api/history";
 
 export const getSearchHistory = async () => {
   const response = await fetch(API_URL);

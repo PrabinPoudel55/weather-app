@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000/api/weather";
+const API_URL =
+  "https://weather-app-ivge.onrender.com/api/weather";
 
 export const getWeather = async (city) => {
   try {

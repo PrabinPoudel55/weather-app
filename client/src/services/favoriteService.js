@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000/api/favorites";
+const API_URL =
+  "https://weather-app-ivge.onrender.com/api/favorites";
 
 export const getFavorites = async () => {
   const response = await fetch(API_URL);
