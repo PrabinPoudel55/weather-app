@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const weatherRoutes = require("./routes/weatherRoutes");
 const historyRoutes = require("./routes/historyRoutes");
+const favoriteRoutes = require("./routes/favoriteRoutes");
 
 // Use public DNS servers because of the DNS issue
 // encountered on the W-Link network.
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 // Weather routes
 app.use("/api/weather", weatherRoutes);
 app.use("/api/history", historyRoutes);
+app.use("/api/favorites", favoriteRoutes);
 
 // Start server
 app.listen(PORT, () => {
